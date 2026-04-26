@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOUTHERN ESCAPE | 九州自駕行</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      background-color: #0a0c0a;
+      color: #f0f0f0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+    
+    .tab-btn.active {
+      background-color: white;
+      color: black;
+      font-weight: bold;
+    }
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    .tab-content.active {
+      display: grid;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 6s linear infinite;
+    }
+  </style>
+</head>
+<body class="selection:bg-emerald-500/30 font-sans">
+
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-emerald-900/20 rounded-full blur-[140px]"></div>
+    <div class="absolute bottom-[-5%] left-[-10%] w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[140px]"></div>
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 py-12 md:py-20">
+    
+    <header class="mb-16 md:mb-24">
+      <div class="flex items-center gap-2 mb-4">
+        <i data-lucide="calendar" class="text-emerald-500 w-4 h-4"></i>
+        <span class="font-mono text-emerald-500 text-xs tracking-[0.4em] uppercase">2026 Golden Week Trip</span>
+      </div>
+      <h1 class="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-8 bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent">
+        SOUTHERN<br />ESCAPE.
+      </h1>
+      <div class="flex flex-wrap items-center gap-6">
+        <div class="h-px w-24 bg-emerald-500"></div>
+        <p class="text-white/40 font-mono text-sm tracking-wider uppercase">Fukuoka — Kagoshima — Miyazaki</p>
+      </div>
+    </header>
+
+    <div class="flex flex-wrap gap-2 md:gap-4 mb-12 sticky top-8 z-20 backdrop-blur-md py-4 -mx-4 px-4 rounded-3xl border border-white/5 bg-black/20" id="tabs">
+      <button onclick="switchTab(1)" class="tab-btn active relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40">DAY 01</button>
+      <button onclick="switchTab(2)" class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40">DAY 02</button>
+      <button onclick="switchTab(3)" class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40">DAY 03</button>
+      <button onclick="switchTab(4)" class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40">DAY 04</button>
+      <button onclick="switchTab(5)" class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40">DAY 05</button>
+    </div>
+
+    <div id="day-1" class="tab-content active grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
+      <div class="lg:col-span-5 lg:sticky lg:top-32">
+        <div class="mb-8">
+          <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2">01</span>
+          <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">啟程：向南方的火山出發</h2>
+          <div class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20">
+            <i data-lucide="map" class="w-4 h-4"></i> 福岡 → 熊本 → 鹿兒島
+            <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> 2026/05/01
+          </div>
+        </div>
+        <div class="relative group mt-8">
+          <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
+          <div class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70 italic">
+            <p class="flex gap-2"><span class="text-2xl text-emerald-500 font-serif leading-none">“</span>從福岡出發走九州自動車道，中途在熊本宮原SA休息，預計總車程約 3.5 小時。準備好公路旅行歌單！</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-7 space-y-4">
+        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
+          <div class="flex flex-col items-center">
+            <div class="text-xs font-mono text-white/30 mb-1">12:00</div>
+            <div class="p-3 rounded-2xl bg-blue-500/20 text-blue-400"><i data-lucide="car" class="w-5 h-5"></i></div>
+          </div>
+          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">九大學研都市 Toyota 取車 🚗</h3></div>
+          <a href="https://goo.gl/maps/example" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
+        </div>
+        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
+          <div class="flex flex-col items-center">
+            <div class="text-xs font-mono text-white/30 mb-1">13:30</div>
+            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="coffee" class="w-5 h-5"></i></div>
+          </div>
+          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">途中休息：熊本 宮原 SA (下行)</h3></div>
+          <a href="https://goo.gl/maps/example" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
+        </div>
+        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
+          <div class="flex flex-col items-center">
+            <div class="text-xs font-mono text-white/30 mb-1">16:00</div>
+            <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400"><i data-lucide="hotel" class="w-5 h-5"></i></div>
+          </div>
+          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">ART 鹿兒島酒店 Check-in</h3></div>
+          <a href="https://goo.gl/maps/example" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div id="day-2" class="tab-content grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
+      <div class="lg:col-span-5 lg:sticky lg:top-32">
+        <div class="mb-8">
+          <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2">02</span>
+          <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">薩摩風華：櫻島與仙嚴園</h2>
+          <div class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20">
+            <i data-lucide="map" class="w-4 h-4"></i> 鹿兒島市區
+            <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> 2026/05/02
+          </div>
+        </div>
+        <div class="relative group mt-8">
+          <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
+          <div class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70 italic">
+            <p class="flex gap-2"><span class="text-2xl text-emerald-500 font-serif leading-none">“</span>仙嚴園的薩摩切子工藝非常迷人，下午在櫻島感受活火山的震撼。</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-7 space-y-4">
+        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
+          <div class="flex flex-col items-center">
+            <div class="text-xs font-mono text-white/30 mb-1">09:30</div>
+            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+          </div>
+          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">仙嚴園（抹茶體驗、遠眺櫻島）</h3></div>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="mt-40 flex flex-col md:flex-row justify-between items-end gap-12 border-t border-white/5 pt-16">
+      <div class="flex flex-col gap-6">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center relative overflow-hidden group">
+            <div class="absolute inset-0 bg-emerald-500/20 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-2xl"></div>
+            <i data-lucide="music" class="text-emerald-500 relative z-10 animate-spin-slow w-6 h-6"></i>
+          </div>
+          <div>
+            <p class="text-xs text-white/30 font-mono uppercase tracking-widest mb-1">On the Radio</p>
+            <p class="text-sm text-white/60 font-medium italic">City Pop Roadtrip Selection 1984</p>
+          </div>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="text-xs font-mono tracking-[0.4em] text-white/20 uppercase mb-2">Designed for the Road</p>
+        <p class="text-2xl font-black text-white/10 tracking-tighter italic select-none">VIBE CODING // KYUSHU 2026</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // 啟用 Lucide 圖示
+    lucide.createIcons();
+
+    // 處理天數切換的簡單程式碼
+    function switchTab(dayNumber) {
+      // 隱藏所有內容
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      // 取消所有按鈕的亮起狀態
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active', 'text-black', 'bg-white', 'font-bold'));
+      
+      // 顯示指定的內容並點亮按鈕
+      document.getElementById('day-' + dayNumber).classList.add('active');
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons[dayNumber - 1].classList.add('active', 'text-black', 'bg-white', 'font-bold');
+    }
+  </script>
+</body>
+</html>
