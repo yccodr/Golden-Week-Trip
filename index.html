@@ -1,446 +1,777 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SOUTHERN ESCAPE | Kyushu Road Trip</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    body {
-      background-color: #0a0c0a;
-      color: #f0f0f0;
-      margin: 0;
-      overflow-x: hidden;
-    }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
-    
-    .tab-btn.active {
-      background-color: white !important;
-      color: black !important;
-      font-weight: bold !important;
-    }
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.5s ease-out forwards;
-    }
-    .tab-content.active {
-      display: grid;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes spin-slow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .animate-spin-slow {
-      animation: spin-slow 6s linear infinite;
-    }
-
-    .travel-time {
-      position: relative;
-      padding-left: 2.75rem; 
-      margin: 0.25rem 0;
-      color: rgba(255, 255, 255, 0.4);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.75rem;
-      display: flex;
-      align-items: center;
-    }
-    .travel-time::before {
-      content: '';
-      position: absolute;
-      left: 1.5rem; 
-      top: -1.2rem;
-      bottom: -1.2rem;
-      width: 1px;
-      background: rgba(255, 255, 255, 0.1);
-      z-index: -1;
-    }
-  </style>
-</head>
-<body class="selection:bg-emerald-500/30 font-sans">
-
-  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-    <div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-emerald-900/20 rounded-full blur-[140px]"></div>
-    <div class="absolute bottom-[-5%] left-[-10%] w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[140px]"></div>
-  </div>
-
-  <div class="relative z-10 max-w-6xl mx-auto px-6 py-12 md:py-20">
-    
-    <header class="mb-16 md:mb-24">
-      <div class="flex items-center gap-2 mb-4">
-        <i data-lucide="calendar" class="text-emerald-500 w-4 h-4"></i>
-        <span class="font-mono text-emerald-500 text-xs tracking-[0.4em] uppercase">2026 Golden Week Trip</span>
-      </div>
-      <h1 class="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-8 bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent">
-        SOUTHERN<br />ESCAPE.
-      </h1>
-      <div class="flex flex-wrap items-center gap-6">
-        <div class="h-px w-24 bg-emerald-500"></div>
-        <p class="text-white/40 font-mono text-sm tracking-wider uppercase">福岡 Fukuoka — 鹿兒島 Kagoshima — 宮崎 Miyazaki</p>
-      </div>
-    </header>
-
-    <div class="flex flex-wrap gap-2 md:gap-4 mb-12 sticky top-8 z-20 backdrop-blur-md py-4 -mx-4 px-4 rounded-3xl border border-white/5 bg-black/20" id="tabs">
-      <button onclick="switchTab(1)" class="tab-btn active relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40">DAY 01</button>
-      <button onclick="switchTab(2)" class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40">DAY 02</button>
-      <button onclick="switchTab(3)" class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40">DAY 03</button>
-      <button onclick="switchTab(4)" class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40">DAY 04</button>
-      <button onclick="switchTab(5)" class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40">DAY 05</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SOUTHERN ESCAPE | Kyushu Road Trip</title>
+  </head>
+  <body class="selection:bg-emerald-500/30 font-sans">
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      <div
+        class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-emerald-900/20 rounded-full blur-[140px]"
+      ></div>
+      <div
+        class="absolute bottom-[-5%] left-[-10%] w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[140px]"
+      ></div>
     </div>
 
-    <div id="day-1" class="tab-content active grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
-      <div class="lg:col-span-5 lg:sticky lg:top-32">
-        <div class="mb-8">
-          <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2">01</span>
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Departure: Heading South</h2>
-          <div class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20">
-            <i data-lucide="map" class="w-4 h-4"></i> Fukuoka → Kumamoto → Kagoshima
-            <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> May 1, 2026
+    <div class="relative z-10 max-w-6xl mx-auto px-6 py-12 md:py-20">
+      <header class="mb-16 md:mb-24">
+        <div class="flex items-center gap-2 mb-4">
+          <i data-lucide="calendar" class="text-emerald-500 w-4 h-4"></i>
+          <span class="font-mono text-emerald-500 text-xs tracking-[0.4em] uppercase"
+            >2026 Golden Week Trip</span
+          >
+        </div>
+        <h1
+          class="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85] mb-8 bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent"
+        >
+          SOUTHERN<br />ESCAPE.
+        </h1>
+        <div class="flex flex-wrap items-center gap-6">
+          <div class="h-px w-24 bg-emerald-500"></div>
+          <p class="text-white/40 font-mono text-sm tracking-wider uppercase">
+            福岡 Fukuoka — 鹿兒島 Kagoshima — 宮崎 Miyazaki
+          </p>
+        </div>
+      </header>
+
+      <div
+        class="flex flex-wrap gap-2 md:gap-4 mb-12 sticky top-8 z-20 backdrop-blur-md py-4 -mx-4 px-4 rounded-3xl border border-white/5 bg-black/20"
+        id="tabs"
+      >
+        <button
+          onclick="switchTab(1)"
+          class="tab-btn active relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40"
+        >
+          DAY 01
+        </button>
+        <button
+          onclick="switchTab(2)"
+          class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40"
+        >
+          DAY 02
+        </button>
+        <button
+          onclick="switchTab(3)"
+          class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40"
+        >
+          DAY 03
+        </button>
+        <button
+          onclick="switchTab(4)"
+          class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40"
+        >
+          DAY 04
+        </button>
+        <button
+          onclick="switchTab(5)"
+          class="tab-btn relative px-6 py-3 rounded-2xl font-mono text-xs transition-all duration-300 border border-white/10 hover:text-white/80 text-white/40"
+        >
+          DAY 05
+        </button>
+      </div>
+
+      <div
+        id="day-1"
+        class="tab-content active grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start"
+      >
+        <div class="lg:col-span-5 lg:sticky lg:top-32">
+          <div class="mb-8">
+            <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2"
+              >01</span
+            >
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+              Departure: Heading South
+            </h2>
+            <div
+              class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20"
+            >
+              <i data-lucide="map" class="w-4 h-4"></i> Fukuoka → Kumamoto → Kagoshima
+              <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> May 1, 2026
+            </div>
+          </div>
+          <div class="relative group mt-8">
+            <div
+              class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"
+            ></div>
+            <div
+              class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70"
+            >
+              <p class="flex gap-2">
+                <i data-lucide="sticky-note" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i>
+                本日為長途移動。福岡至宮原 SA 車程約 1.5 小時，短暫休息後前往鹿兒島，車程約 2
+                小時。首日直接抵達最南端，以利後續由南向北的行程安排。
+              </p>
+            </div>
           </div>
         </div>
-        <div class="relative group mt-8">
-          <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-          <div class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70">
-            <p class="flex gap-2"><i data-lucide="sticky-note" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i> 本日為長途移動。福岡至宮原 SA 車程約 1.5 小時，短暫休息後前往鹿兒島，車程約 2 小時。首日直接抵達最南端，以利後續由南向北的行程安排。</p>
+        <div class="lg:col-span-7 flex flex-col gap-3">
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">12:00</div>
+              <div class="p-3 rounded-2xl bg-blue-500/20 text-blue-400">
+                <i data-lucide="car" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                九大學研都市取車 (Toyota Rent a Car) 🚗
+              </h3>
+            </div>
+            <a
+              href="https://maps.app.goo.gl/cKKc9wruFkWcdkKn9"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 1h 30m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">13:40</div>
+              <div class="p-3 rounded-2xl bg-white/10 text-white/80">
+                <i data-lucide="coffee" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                宮原休息站 (Miyahara SA) - 南下
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=宮原SA下り"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 2h 00m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">16:00</div>
+              <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400">
+                <i data-lucide="hotel" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                鹿兒島藝術酒店 (ART Hotel Kagoshima) Check-in
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=ART鹿兒島酒店"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 20m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">18:00</div>
+              <div class="p-3 rounded-2xl bg-white/10 text-white/80">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                天文館 (Tenmonkan) - 鹿兒島黑豬肉晚餐
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=天文館通"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
           </div>
         </div>
       </div>
-      <div class="lg:col-span-7 flex flex-col gap-3">
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">12:00</div>
-            <div class="p-3 rounded-2xl bg-blue-500/20 text-blue-400"><i data-lucide="car" class="w-5 h-5"></i></div>
+
+      <div id="day-2" class="tab-content grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
+        <div class="lg:col-span-5 lg:sticky lg:top-32">
+          <div class="mb-8">
+            <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2"
+              >02</span
+            >
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+              Satsuma Charm: The Volcano
+            </h2>
+            <div
+              class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20"
+            >
+              <i data-lucide="map" class="w-4 h-4"></i> Kagoshima City Area
+              <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> May 2, 2026
+            </div>
           </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">九大學研都市取車 (Toyota Rent a Car) 🚗</h3></div>
-          <a href="https://maps.app.goo.gl/cKKc9wruFkWcdkKn9" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
+          <div class="relative group mt-8">
+            <div
+              class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"
+            ></div>
+            <div
+              class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70"
+            >
+              <p class="flex gap-2">
+                <i data-lucide="sticky-note" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i>
+                主要於鹿兒島市區與櫻島周邊活動，各景點間車程均在 15-20
+                分鐘內。搭乘櫻島渡輪時，車輛可直接駛入船艙一同渡海（航程約 15 分鐘）。
+              </p>
+            </div>
+          </div>
         </div>
-        
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 1h 30m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">13:40</div>
-            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="coffee" class="w-5 h-5"></i></div>
+        <div class="lg:col-span-7 flex flex-col gap-3">
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">09:30</div>
+              <div class="p-3 rounded-2xl bg-white/10 text-white/80">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                仙巖園 (Sengan-en) - 抹茶與庭園絕景
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=仙嚴園"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
           </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">宮原休息站 (Miyahara SA) - 南下</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=宮原SA下り" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
 
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 2h 00m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">16:00</div>
-            <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400"><i data-lucide="hotel" class="w-5 h-5"></i></div>
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 15m
           </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">鹿兒島藝術酒店 (ART Hotel Kagoshima) Check-in</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=ART鹿兒島酒店" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
 
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 20m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">18:00</div>
-            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">13:00</div>
+              <div class="p-3 rounded-2xl bg-blue-500/20 text-blue-400">
+                <i data-lucide="navigation" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                櫻島渡輪 (Sakurajima Ferry)
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=櫻島渡輪鹿兒島港"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
           </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">天文館 (Tenmonkan) - 鹿兒島黑豬肉晚餐</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=天文館通" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
+
+          <div class="travel-time text-emerald-500/60 font-bold">
+            <i data-lucide="ship" class="inline w-3 h-3 mr-2"></i> Ferry Ride: 15m
+          </div>
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 20m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">15:00</div>
+              <div class="p-3 rounded-2xl bg-white/10 text-white/80">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                湯之平展望所 (Yunohira Observatory)
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=湯之平展望所"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
         </div>
       </div>
+
+      <div id="day-3" class="tab-content grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
+        <div class="lg:col-span-5 lg:sticky lg:top-32">
+          <div class="mb-8">
+            <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2"
+              >03</span
+            >
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+              Realm of Myths: Kirishima
+            </h2>
+            <div
+              class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20"
+            >
+              <i data-lucide="map" class="w-4 h-4"></i> Kagoshima ➔ Kirishima ➔ Miyazaki
+              <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> May 3, 2026
+            </div>
+          </div>
+          <div class="relative group mt-8">
+            <div
+              class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"
+            ></div>
+            <div
+              class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70"
+            >
+              <p class="flex gap-2">
+                <i data-lucide="sticky-note" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i>
+                自鹿兒島前往霧島，車程約 1 小時 15 分。神話之里公園、霧島神宮與高千穗牧場相距皆在 10
+                分鐘車程內。傍晚再驅車約 1 小時 15 分前往宮崎市區住宿。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 flex flex-col gap-3">
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">11:00</div>
+              <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400">
+                <i data-lucide="hotel" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                Hotel Check-out, 準備前往山區
+              </h3>
+            </div>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 1h 15m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">12:30</div>
+              <div class="p-3 rounded-2xl bg-white/10 text-white/80">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                霧島神話之里公園 (Kirishima Shinwa no Sato Park)
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=霧島神話里公園"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 10m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">14:00</div>
+              <div class="p-3 rounded-2xl bg-white/10 text-white/80">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                霧島神宮 (Kirishima Shrine)
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=霧島神宮"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 10m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">15:30</div>
+              <div class="p-3 rounded-2xl bg-white/10 text-white/80">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                高千穗牧場 (Takachiho Farm)
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=高千穗牧場"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 1h 15m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">17:30</div>
+              <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400">
+                <i data-lucide="hotel" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                結 -musubi- 青年旅館 Check-in 🌿
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=75-5+Akae,+Miyazaki,+880-0912"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+
+      <div id="day-4" class="tab-content grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
+        <div class="lg:col-span-5 lg:sticky lg:top-32">
+          <div class="mb-8">
+            <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2"
+              >04</span
+            >
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+              Coastal Sun: Coast to Miyakonojo
+            </h2>
+            <div
+              class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20"
+            >
+              <i data-lucide="map" class="w-4 h-4"></i> Miyazaki Coast ➔ Miyakonojo
+              <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> May 4, 2026
+            </div>
+          </div>
+          <div class="relative group mt-8">
+            <div
+              class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"
+            ></div>
+            <div
+              class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70"
+            >
+              <p class="flex gap-2">
+                <i data-lucide="sticky-note" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i>
+                上午從宮崎市區出發，沿海岸線前往青島神社與鬼之洗衣板。午後轉往內陸，車程約 1
+                小時抵達關之尾瀑布，傍晚前往都城辦理入住。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 flex flex-col gap-3">
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">10:00</div>
+              <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400">
+                <i data-lucide="hotel" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">結 -musubi- Check-out</h3>
+            </div>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 30m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">10:30</div>
+              <div class="p-3 rounded-2xl bg-white/10 text-white/80">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                青島神社 (Aoshima Shrine) & 鬼之洗衣板
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=青島神社"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 1h 00m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">14:00</div>
+              <div class="p-3 rounded-2xl bg-white/10 text-white/80">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                關之尾瀑布 (Sekinoo Falls)
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=關之尾瀑布"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 20m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">16:00</div>
+              <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400">
+                <i data-lucide="hotel" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                都城船舶酒店 (Vessel Hotel Miyakonojo) Check-in
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=船舶都城酒店"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+
+      <div id="day-5" class="tab-content grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
+        <div class="lg:col-span-5 lg:sticky lg:top-32">
+          <div class="mb-8">
+            <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2"
+              >05</span
+            >
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">The Journey Home</h2>
+            <div
+              class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20"
+            >
+              <i data-lucide="map" class="w-4 h-4"></i> Miyakonojo → Fukuoka
+              <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> May 5, 2026
+            </div>
+          </div>
+          <div class="relative group mt-8">
+            <div
+              class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"
+            ></div>
+            <div
+              class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70"
+            >
+              <p class="flex gap-2">
+                <i data-lucide="sticky-note" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i>
+                旅途尾聲。都城至福岡車程約需 4
+                小時，建議中午前離開市區，以避開黃金週下午的高速公路返程車潮。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 flex flex-col gap-3">
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">10:00</div>
+              <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400">
+                <i data-lucide="hotel" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                Hotel Check-out & 準備上路
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=船舶都城酒店"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 2h 30m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">13:30</div>
+              <div class="p-3 rounded-2xl bg-white/10 text-white/80">
+                <i data-lucide="coffee" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                廣川休息站 (Hirokawa SA) - 北上
+              </h3>
+            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=廣川SA上り"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+
+          <div class="travel-time">
+            <i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 1h 10m
+          </div>
+
+          <div
+            class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all"
+          >
+            <div class="flex flex-col items-center">
+              <div class="text-xs font-mono text-white/30 mb-1">16:30</div>
+              <div class="p-3 rounded-2xl bg-blue-500/20 text-blue-400">
+                <i data-lucide="car" class="w-5 h-5"></i>
+              </div>
+            </div>
+            <div class="flex-1 pr-2">
+              <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+                九大學研都市 (Kyudai-Gakkentoshi) 還車 🏁
+              </h3>
+            </div>
+            <a
+              href="https://maps.app.goo.gl/cKKc9wruFkWcdkKn9"
+              target="_blank"
+              class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"
+              ><i data-lucide="external-link" class="w-4 h-4"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+
+      <footer
+        class="mt-40 flex flex-col md:flex-row justify-between items-end gap-12 border-t border-white/5 pt-16"
+      >
+        <div class="flex flex-col gap-8">
+          <a
+            href="https://open.spotify.com/playlist/6WvDFdRQd5OKusMG0vnhQj?si=6122369d642c4737"
+            target="_blank"
+            class="flex items-center gap-4 hover:opacity-80 transition-opacity cursor-pointer group"
+          >
+            <div
+              class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center relative overflow-hidden"
+            >
+              <div
+                class="absolute inset-0 bg-emerald-500/20 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-2xl"
+              ></div>
+              <i
+                data-lucide="music"
+                class="text-emerald-500 relative z-10 animate-spin-slow w-6 h-6"
+              ></i>
+            </div>
+            <div>
+              <p
+                class="text-xs text-emerald-500 font-mono uppercase tracking-widest mb-1 flex items-center gap-1"
+              >
+                On the Radio <i data-lucide="external-link" class="w-3 h-3"></i>
+              </p>
+              <p class="text-sm text-white/60 font-medium italic">Japanese Road Trip 推薦歌單</p>
+            </div>
+          </a>
+
+          <a
+            href="https://open.spotify.com/blend/taste-match/12e9afe354b0bc3f?si=BNubVdbRRhyPoh1MboR0EA&fallback=getapp&blendDecoration=5f9c38d2"
+            target="_blank"
+            class="flex items-center gap-4 hover:opacity-80 transition-opacity cursor-pointer group"
+          >
+            <div
+              class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center relative overflow-hidden"
+            >
+              <div
+                class="absolute inset-0 bg-blue-500/20 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-2xl"
+              ></div>
+              <i data-lucide="users" class="text-blue-400 relative z-10 w-6 h-6"></i>
+            </div>
+            <div>
+              <p
+                class="text-xs text-blue-400 font-mono uppercase tracking-widest mb-1 flex items-center gap-1"
+              >
+                Road Trip Blend <i data-lucide="user-plus" class="w-3 h-3"></i>
+              </p>
+              <p class="text-sm text-white/60 font-medium italic">
+                加入 Yababa 的共享歌單一起點歌！
+              </p>
+            </div>
+          </a>
+        </div>
+        <div class="text-right">
+          <p class="text-xs font-mono tracking-[0.4em] text-white/20 uppercase mb-2">
+            Designed for the Road
+          </p>
+          <p class="text-2xl font-black text-white/10 tracking-tighter italic select-none">
+            VIBE CODING // KYUSHU 2026
+          </p>
+        </div>
+      </footer>
     </div>
 
-    <div id="day-2" class="tab-content grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
-      <div class="lg:col-span-5 lg:sticky lg:top-32">
-        <div class="mb-8">
-          <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2">02</span>
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Satsuma Charm: The Volcano</h2>
-          <div class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20">
-            <i data-lucide="map" class="w-4 h-4"></i> Kagoshima City Area
-            <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> May 2, 2026
-          </div>
-        </div>
-        <div class="relative group mt-8">
-          <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-          <div class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70">
-            <p class="flex gap-2"><i data-lucide="sticky-note" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i> 主要於鹿兒島市區與櫻島周邊活動，各景點間車程均在 15-20 分鐘內。搭乘櫻島渡輪時，車輛可直接駛入船艙一同渡海（航程約 15 分鐘）。</p>
-          </div>
-        </div>
-      </div>
-      <div class="lg:col-span-7 flex flex-col gap-3">
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">09:30</div>
-            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">仙巖園 (Sengan-en) - 抹茶與庭園絕景</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=仙嚴園" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 15m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">13:00</div>
-            <div class="p-3 rounded-2xl bg-blue-500/20 text-blue-400"><i data-lucide="navigation" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">櫻島渡輪 (Sakurajima Ferry)</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=櫻島渡輪鹿兒島港" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-
-        <div class="travel-time text-emerald-500/60 font-bold"><i data-lucide="ship" class="inline w-3 h-3 mr-2"></i> Ferry Ride: 15m</div>
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 20m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">15:00</div>
-            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">湯之平展望所 (Yunohira Observatory)</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=湯之平展望所" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-      </div>
-    </div>
-
-    <div id="day-3" class="tab-content grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
-      <div class="lg:col-span-5 lg:sticky lg:top-32">
-        <div class="mb-8">
-          <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2">03</span>
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Realm of Myths: Kirishima</h2>
-          <div class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20">
-            <i data-lucide="map" class="w-4 h-4"></i> Kagoshima ➔ Kirishima ➔ Miyazaki
-            <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> May 3, 2026
-          </div>
-        </div>
-        <div class="relative group mt-8">
-          <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-          <div class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70">
-            <p class="flex gap-2"><i data-lucide="sticky-note" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i> 自鹿兒島前往霧島，車程約 1 小時 15 分。神話之里公園、霧島神宮與高千穗牧場相距皆在 10 分鐘車程內。傍晚再驅車約 1 小時 15 分前往宮崎市區住宿。</p>
-          </div>
-        </div>
-      </div>
-      <div class="lg:col-span-7 flex flex-col gap-3">
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">11:00</div>
-            <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400"><i data-lucide="hotel" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">Hotel Check-out, 準備前往山區</h3></div>
-        </div>
-
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 1h 15m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">12:30</div>
-            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">霧島神話之里公園 (Kirishima Shinwa no Sato Park)</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=霧島神話里公園" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 10m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">14:00</div>
-            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="sparkles" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">霧島神宮 (Kirishima Shrine)</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=霧島神宮" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 10m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">15:30</div>
-            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">高千穗牧場 (Takachiho Farm)</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=高千穗牧場" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 1h 15m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">17:30</div>
-            <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400"><i data-lucide="hotel" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">結 -musubi- 青年旅館 Check-in 🌿</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=75-5+Akae,+Miyazaki,+880-0912" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-      </div>
-    </div>
-
-    <div id="day-4" class="tab-content grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
-      <div class="lg:col-span-5 lg:sticky lg:top-32">
-        <div class="mb-8">
-          <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2">04</span>
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Coastal Sun: Coast to Miyakonojo</h2>
-          <div class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20">
-            <i data-lucide="map" class="w-4 h-4"></i> Miyazaki Coast ➔ Miyakonojo
-            <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> May 4, 2026
-          </div>
-        </div>
-        <div class="relative group mt-8">
-          <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-          <div class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70">
-            <p class="flex gap-2"><i data-lucide="sticky-note" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i> 上午從宮崎市區出發，沿海岸線前往青島神社與鬼之洗衣板。午後轉往內陸，車程約 1 小時抵達關之尾瀑布，傍晚前往都城辦理入住。</p>
-          </div>
-        </div>
-      </div>
-      <div class="lg:col-span-7 flex flex-col gap-3">
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">10:00</div>
-            <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400"><i data-lucide="hotel" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">結 -musubi- Check-out</h3></div>
-        </div>
-
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 30m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">10:30</div>
-            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="sparkles" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">青島神社 (Aoshima Shrine) & 鬼之洗衣板</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=青島神社" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 1h 00m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">14:00</div>
-            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">關之尾瀑布 (Sekinoo Falls)</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=關之尾瀑布" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 20m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">16:00</div>
-            <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400"><i data-lucide="hotel" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">都城船舶酒店 (Vessel Hotel Miyakonojo) Check-in</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=船舶都城酒店" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-      </div>
-    </div>
-
-    <div id="day-5" class="tab-content grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
-      <div class="lg:col-span-5 lg:sticky lg:top-32">
-        <div class="mb-8">
-          <span class="text-8xl font-black text-white/5 font-mono leading-none block mb-2">05</span>
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">The Journey Home</h2>
-          <div class="flex items-center gap-3 text-emerald-500 font-mono text-sm px-4 py-2 bg-emerald-500/10 rounded-full w-fit border border-emerald-500/20">
-            <i data-lucide="map" class="w-4 h-4"></i> Miyakonojo → Fukuoka
-            <i data-lucide="chevron-right" class="w-4 h-4 opacity-50"></i> May 5, 2026
-          </div>
-        </div>
-        <div class="relative group mt-8">
-          <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 rounded-3xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-          <div class="relative p-8 bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 leading-relaxed text-white/70">
-            <p class="flex gap-2"><i data-lucide="sticky-note" class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5"></i> 旅途尾聲。都城至福岡車程約需 4 小時，建議中午前離開市區，以避開黃金週下午的高速公路返程車潮。</p>
-          </div>
-        </div>
-      </div>
-      <div class="lg:col-span-7 flex flex-col gap-3">
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">10:00</div>
-            <div class="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400"><i data-lucide="hotel" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">Hotel Check-out & 準備上路</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=船舶都城酒店" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 2h 30m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">13:30</div>
-            <div class="p-3 rounded-2xl bg-white/10 text-white/80"><i data-lucide="coffee" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">廣川休息站 (Hirokawa SA) - 北上</h3></div>
-          <a href="https://www.google.com/maps/search/?api=1&query=廣川SA上り" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-
-        <div class="travel-time"><i data-lucide="move-down" class="inline w-3 h-3 mr-2"></i> Drive: 1h 10m</div>
-
-        <div class="group relative flex items-center gap-4 md:gap-6 p-5 md:p-6 rounded-3xl border border-white/5 bg-white/[0.03] hover:bg-white/[0.08] backdrop-blur-md transition-all">
-          <div class="flex flex-col items-center">
-            <div class="text-xs font-mono text-white/30 mb-1">16:30</div>
-            <div class="p-3 rounded-2xl bg-blue-500/20 text-blue-400"><i data-lucide="car" class="w-5 h-5"></i></div>
-          </div>
-          <div class="flex-1 pr-2"><h3 class="text-lg md:text-xl font-semibold tracking-tight">九大學研都市 (Kyudai-Gakkentoshi) 還車 🏁</h3></div>
-          <a href="https://maps.app.goo.gl/cKKc9wruFkWcdkKn9" target="_blank" class="p-3 rounded-xl bg-white/5 hover:bg-emerald-500/20 text-white/40 hover:text-emerald-400 transition-colors border border-white/5"><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        </div>
-      </div>
-    </div>
-
-    <footer class="mt-40 flex flex-col md:flex-row justify-between items-end gap-12 border-t border-white/5 pt-16">
-      <div class="flex flex-col gap-8">
-        
-        <a href="https://open.spotify.com/playlist/6WvDFdRQd5OKusMG0vnhQj?si=6122369d642c4737" target="_blank" class="flex items-center gap-4 hover:opacity-80 transition-opacity cursor-pointer group">
-          <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center relative overflow-hidden">
-            <div class="absolute inset-0 bg-emerald-500/20 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-2xl"></div>
-            <i data-lucide="music" class="text-emerald-500 relative z-10 animate-spin-slow w-6 h-6"></i>
-          </div>
-          <div>
-            <p class="text-xs text-emerald-500 font-mono uppercase tracking-widest mb-1 flex items-center gap-1">
-              On the Radio <i data-lucide="external-link" class="w-3 h-3"></i>
-            </p>
-            <p class="text-sm text-white/60 font-medium italic">Japanese Road Trip 推薦歌單</p>
-          </div>
-        </a>
-
-        <a href="https://open.spotify.com/blend/taste-match/12e9afe354b0bc3f?si=BNubVdbRRhyPoh1MboR0EA&fallback=getapp&blendDecoration=5f9c38d2" target="_blank" class="flex items-center gap-4 hover:opacity-80 transition-opacity cursor-pointer group">
-          <div class="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center relative overflow-hidden">
-            <div class="absolute inset-0 bg-blue-500/20 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-2xl"></div>
-            <i data-lucide="users" class="text-blue-400 relative z-10 w-6 h-6"></i>
-          </div>
-          <div>
-            <p class="text-xs text-blue-400 font-mono uppercase tracking-widest mb-1 flex items-center gap-1">
-              Road Trip Blend <i data-lucide="user-plus" class="w-3 h-3"></i>
-            </p>
-            <p class="text-sm text-white/60 font-medium italic">加入 Yababa 的共享歌單一起點歌！</p>
-          </div>
-        </a>
-
-      </div>
-      <div class="text-right">
-        <p class="text-xs font-mono tracking-[0.4em] text-white/20 uppercase mb-2">Designed for the Road</p>
-        <p class="text-2xl font-black text-white/10 tracking-tighter italic select-none">VIBE CODING // KYUSHU 2026</p>
-      </div>
-    </footer>
-
-  </div>
-
-  <script>
-    lucide.createIcons();
-
-    function switchTab(dayNumber) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-      document.getElementById('day-' + dayNumber).classList.add('active');
-      const buttons = document.querySelectorAll('.tab-btn');
-      buttons[dayNumber - 1].classList.add('active');
-    }
-  </script>
-</body>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>

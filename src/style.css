@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #0a0c0a;
+  color: #f0f0f0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.tab-btn.active {
+  background-color: white !important;
+  color: black !important;
+  font-weight: bold !important;
+}
+.tab-content {
+  display: none;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+.tab-content.active {
+  display: grid;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 6s linear infinite;
+}
+
+.travel-time {
+  position: relative;
+  padding-left: 2.75rem;
+  margin: 0.25rem 0;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+.travel-time::before {
+  content: "";
+  position: absolute;
+  left: 1.5rem;
+  top: -1.2rem;
+  bottom: -1.2rem;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: -1;
+}
