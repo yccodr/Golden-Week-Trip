@@ -1,9 +1,46 @@
 import "./style.css";
-import { createIcons } from "lucide";
+import {
+  createIcons,
+  Calendar,
+  Map,
+  ChevronRight,
+  StickyNote,
+  Car,
+  ExternalLink,
+  MoveDown,
+  Coffee,
+  Hotel,
+  MapPin,
+  Navigation,
+  Ship,
+  Sparkles,
+  Music,
+  Users,
+  UserPlus,
+} from "lucide";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize Lucide icons
-  createIcons();
+  createIcons({
+    icons: {
+      Calendar,
+      Map,
+      ChevronRight,
+      StickyNote,
+      Car,
+      ExternalLink,
+      MoveDown,
+      Coffee,
+      Hotel,
+      MapPin,
+      Navigation,
+      Ship,
+      Sparkles,
+      Music,
+      Users,
+      UserPlus,
+    },
+  });
 
   // Tab switching function
   (window as any).switchTab = function (dayNumber: number) {
