@@ -1,3 +1,4 @@
+import "./style.css";
 import { createIcons } from "lucide";
 
 document.addEventListener("DOMContentLoaded", () => {
